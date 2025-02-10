@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: service-core
+  datasource:
+    #GMT%2B8 避免乱码
+    url: jdbc:mysql://localhost/srb?useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+  jackson:  #配置时间日期格式
+    date-format: "yyyy-MM-dd HH:mm:ss"
+    time-zone: GMT+8
+  profiles:
+    active: dev # 日志配置 <springProfile name="dev"> 会生效
+server:
+  port: 8110
+mybatis-plus:
+  mapper-locations: classpath:com/wangtao/mapper/xml/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: assign_id

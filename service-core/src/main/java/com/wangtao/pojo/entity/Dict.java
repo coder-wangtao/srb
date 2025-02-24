@@ -52,5 +52,8 @@ public class Dict implements Serializable {
     @TableLogic
     private Boolean deleted;
 
+    @TableField(exist = false)    //该属性不是数据库表映射的字段
+    private Boolean hasChildren;
+
 
 }

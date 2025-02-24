@@ -12,6 +12,10 @@ spring:
     time-zone: GMT+8
   profiles:
     active: dev # 日志配置 <springProfile name="dev"> 会生效
+  servlet:
+    multipart:
+      max-file-size: 20MB   #一次请求 一个文件表单项一个文件最大大小
+      max-request-size: 100MB  #一次请求 所有文件表单项 总文件最大大小
 server:
   port: 8110
 mybatis-plus:

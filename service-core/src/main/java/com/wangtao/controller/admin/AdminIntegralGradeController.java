@@ -39,7 +39,7 @@ public class AdminIntegralGradeController {
 
     @GetMapping("{id}")
     @ApiOperation("根据id查询积分等级")
-    public ResponseVo getById(@ApiParam("积分等级id") @PathVariable("id") Long id) {
+    public ResponseVo getById(@ApiParam(value = "积分等级id",type = "long",example = "1") @PathVariable("id") Long id) {
         IntegralGrade integralGrade = integralGradeService.getById(id);
         if(integralGrade==null){
             return ResponseVo.setResult(ResponseEnum.DATA_NOT_EXISTS);

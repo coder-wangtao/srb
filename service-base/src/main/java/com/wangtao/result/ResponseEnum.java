@@ -15,7 +15,7 @@ public enum ResponseEnum {
     UPLOAD_ERROR(-103, "文件上传错误"),
     EXPORT_DATA_ERROR(-104, "数据导出失败"),
     PARAM_IS_NULL_ERROR(-105, "参数不能为空"),
-
+    HAS_CHILDREN_ERROR(-109,"子数据不为空"),
 
     //-2xx 参数校验
     BORROW_AMOUNT_NULL_ERROR(-201, "借款额度不能为空"),

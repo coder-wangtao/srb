@@ -11,8 +11,9 @@ import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import org.junit.Test;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootApplication
+@SpringBootTest
 public class GenerateTest {
     @Test
     public void genCode() {

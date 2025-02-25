@@ -12,6 +12,7 @@ import com.wangtao.result.ResponseEnum;
 import com.wangtao.service.DictService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.poi.hssf.record.DVALRecord;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,8 +32,8 @@ import java.util.List;
 @Service
 public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements DictService {
 
-//    @Resource
-//    DictExcelVoListener dictExcelVoListener;
+    @Resource
+    RedisTemplate redisTemplate;
 
     @Override
     public void importDict(MultipartFile file) {
@@ -53,10 +54,19 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         }
     }
 
+
+
     @Override
     public List<Dict> parent(Long pid) {
+        //先查询缓存
+        List<Dict> dicts = (List<Dict>) redisTemplate.opsForValue().get("srb:dicts:"+pid);
+        if(!CollectionUtils.isEmpty(dicts)){
+            return dicts;
+        }
+
+        //无缓存
         //select * from dict where parent_id = pid
-        List<Dict> dicts = this.list(Wrappers.lambdaQuery(Dict.class).eq(Dict::getParentId, pid));
+        dicts = this.list(Wrappers.lambdaQuery(Dict.class).eq(Dict::getParentId, pid));
         if(CollectionUtils.isEmpty(dicts)){
             return null;
         }
@@ -66,6 +76,8 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
             dict.setHasChildren(flag);
         });
 
+        //存到redis中
+        redisTemplate.opsForValue().set("srb:dicts:"+pid, dicts);
         return dicts;
     }
 
